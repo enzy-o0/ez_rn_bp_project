@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosResponse, AxiosInstance} from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {TResponseError} from './types/responseError';
 
 export const instance: AxiosInstance = axios.create({
   baseURL: '',
@@ -21,20 +22,15 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 };
 
 // 처음에 로그인 할때, axios setting을 위해 함수로 생성
-export const interceptor = (store: {rt: string; seq: string}) => {
+export const interceptor = (store: {rt: string}) => {
   instance.interceptors.response.use(
     onResponse,
-    async (error: AxiosError<any>) => {
+    async (error: AxiosError<TResponseError>) => {
       if (error.response) {
         const {config} = error;
         const status = error.response?.status;
 
-        if (status === 404 || status === 0) {
-          //   return Promise.reject({
-          //     code: '',
-          //     message: '',
-          //   });
-        } else if (status === 401) {
+        if (status === 401) {
           // access token expired refreshToken
           const originalRequest = config;
 
@@ -46,11 +42,11 @@ export const interceptor = (store: {rt: string; seq: string}) => {
             },
           });
 
-          if (data.data.accessToken) {
+          if (data.at) {
             // let sessionCookie = await getAccessToken();
 
             const jsonValue = JSON.stringify({
-              at: data.data.accessToken,
+              at: data.at,
               //   setCookie: sessionCookie.setCookie,
             });
 
@@ -63,40 +59,19 @@ export const interceptor = (store: {rt: string; seq: string}) => {
             // 만료되어서 진행 못한 api 재호출
             originalRequest!!.headers.authorization = data.data.accessToken;
             return axios(originalRequest!!);
-          } else {
-            //   return Promise.reject({
-            //     code: '',
-            //     message: '',
-            //   });
           }
-        } else if (status === 402) {
-          //   return Promise.reject({
-          //     code: '',
-          //     message: '',
-          //   });
         } else {
-          //   return Promise.reject({
-          //     code: '',
-          //     message: '',
-          //   });
-        }
-      } else if (error.message) {
-        if (error.message.includes('보안을 위해 다시 로그인해주세요.')) {
-          //   return Promise.reject({
-          //     code: '',
-          //     message: '',
-          //   });
-        } else {
-          //   return Promise.reject({
-          //     code: '',
-          //     message: '',
-          //   });
+          return Promise.reject({
+            code: status,
+            message: 'error',
+          });
         }
       } else {
-        //   return Promise.reject({
-        //     code: '',
-        //     message: '',
-        //   });
+        // client error? or network error?
+        return Promise.reject({
+          code: '',
+          message: '',
+        });
       }
     },
   );
