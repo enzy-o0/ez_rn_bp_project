@@ -58,19 +58,19 @@ expo로 빌드하는 것보다, react-native-cli를 이용하여 직접 설정 �
 │   │   ├── ...
 │   ├── 📂orgainsms // atoms 혼합 컴포넌트
 │   │   ├── ...
-│   ├── 📂styles // 공통 css style
+├── 📂styles // 공통 css style
 │   │   ├── ...
 │   │   ├── 📃Mixin.ts // 공통 styled-compoent
 │   │   ├── 📃theme.ts // 공통 css color, fontSize
 ├── 📂features
 │   ├── ...
-│   ├── 📂navigations
-│   │   ├── ...
-│   │   ├── 📂navigators // 각 tab features 모음
+├── 📂navigations
+│   ├── 📂bottomTabs // bottomTabs
 │   │   ├── 📃index.tsx
-│   │   ├── 📃RootTab.tsx // auth에 따른 tab stack 구분
-│   │   ├── 📃BottomTab.tsx // bottom tab menu 모음
-│   │   ├── ...
+├── 📂stacks // Stack.Navigator 모음
+├── 📃RootTab.tsx // auth에 따른 tab stack 구분
+├── 📃Screen.tsx // Screen custom
+│   ├── ...
 ├── 📂reducers // redux reducer slice
 │   ├── ...
 ├── 📃App.tsx
