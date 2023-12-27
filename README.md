@@ -9,23 +9,30 @@
 
 react 개발자로 입사해, mobile application 개발을 담당하게 되었고, android 뿐 아니라 ios 개발도 동시에 진행했어야 했기에 사용하게 되었습니다
 
-[React Native](https://reactnative.dev)란?
-
-     1. iOS 및 Android에 React 의 선언적 UI 프레임워크를 제공합니다.
-     2. React Native를 사용하면 기본 UI 컨트롤을 사용하고 기본 플랫폼에 대한 전체 액세스 권한을 갖습니다.
-
 ---
 
 #### 프로젝트 실행
 
 android studio emulator, xcode ximulator 설정 후,
 
+- yarn install
 - android
-  - yarn android (.env)
+  - yarn android (.env) - 환경에 따라 env를 설정합니다
+    - yarn android:dev (.env.dev)
+    - yarn android:prod (.env.prod)
+- ios - 현 프로젝트는 환경에 따른 스키마 설정이 되어있지 않습니다
+  - yarn ios
+    - yarn ios:dev (.env.dev)
+    - yarn ios:prod (.env.prod)
+
+---
+
+#### 프로젝트 배포
+- android
   - apk build: yarn android:apk
   - aab build: yarn android:aab
 - ios
-  - yarn ios
+  - xcode에서 any IOS devices 선택 후, archive
 
 ---
 
